@@ -1,0 +1,6 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';
+import {TEXAS,parseMetric,convert,fraction,scaled,format} from '../src/converter.js';
+test('Texas references and equivalent metric units',()=>{for(const [unit,n] of [['mm',1244022912],['cm',124402291.2],['m',1244022.912],['km',1244.022912]])assert.ok(Math.abs(convert(n,unit,'length')-1)<1e-12);assert.equal(TEXAS.area,695662);});
+test('area factors are squared independently of the Texas width',()=>{for(const [unit,n] of [['mm',695662e12],['cm',695662e10],['m',695662e6],['km',695662]])assert.ok(Math.abs(convert(n,unit,'area')-1)<1e-12);assert.notEqual(TEXAS.length**2,TEXAS.area);});
+test('Italian decimal, scientific input and invalid states',()=>{assert.equal(parseMetric('1,25').value,1.25);assert.equal(parseMetric('1.25e3').value,1250);for(const s of ['','-1','NaN','Infinity','1.000,2','1e999','1e-999','abc'])assert.ok(parseMetric(s).error,s);assert.equal(parseMetric('0').value,0);});
+test('fractions, prefixes, zero and small values remain meaningful',()=>{assert.equal(fraction(.5),'1/2 di Texas');assert.equal(fraction(2),'2 volte il Texas');assert.equal(scaled(.001),'1 milliTexas');assert.equal(scaled(1e6),'1 megaTexas');assert.notEqual(format(convert(1,'mm','area')),'0');assert.equal(convert(0,'km','length'),0);});
