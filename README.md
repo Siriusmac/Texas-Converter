@@ -44,6 +44,12 @@ Le frazioni con denominatore ≤32 sono usate se l'errore relativo è ≤1%; per
 
 Font Alfa Slab One distribuito secondo `public/FONT-LICENSE.txt`. Illustrazione generata con ImageGen integrato; indicazioni creative in `docs/design.md`.
 
+## Icona nella schermata Home
+
+L'icona raffigura il Texas con la Lone Star e una freccia graduata, in crema e rosso mattone. In `public/icons/` sono inclusi il master PNG 1024×1024, le icone 192×192 e 512×512, l'Apple touch icon 180×180 e la favicon 32×32. Gli angoli sono applicati dal sistema operativo.
+
+`public/site.webmanifest` definisce nome, icone, ambito e avvio in modalità standalone, con percorsi relativi compatibili con GitHub Pages. La Home su iOS usa il collegamento `apple-touch-icon` nell'HTML. La configurazione non aggiunge una modalità offline. Il salvataggio su dispositivi fisici iOS/Android richiede ancora una verifica. Se un collegamento preesistente conserva la vecchia icona, rimuoverlo e aggiungerlo nuovamente dal sito aggiornato.
+
 ## Pubblicazione e verifiche
 
 Repository: https://github.com/Siriusmac/Texas-Converter.
