@@ -1,13 +1,17 @@
+import {mountCounter} from './global-counter.js';
 import {language, t, localizePage, localizeCatalog} from './i18n.js';
 import {mountPlaceSearch} from './place-search.js';
 import {TEXAS,parseMetric,convert,format,fraction,scaled} from './converter.js';
 import {catalog} from './catalog.js';
 localizePage();
+const countMeasurement=mountCounter();
+let lastConfirmation;
+function confirmMeasurement(){const parsed=parseMetric($('#value').value,language);if(parsed.error||parsed.value<=0)return;const unit=$('#unit').value;const ratio=convert(parsed.value,unit,mode);if(!Number.isFinite(ratio)||ratio<=0)return;const key=`${mode}:${ratio}`;if(key===lastConfirmation)return;lastConfirmation=key;countMeasurement({value:parsed.value,unit,mode});}
 const localizedCatalog=localizeCatalog(catalog);
 const $=s=>document.querySelector(s);
 let mode='length',category='Tutti',limit=8;
 function clearPlace(){$('#selected-place').hidden=true;$('#selected-place').replaceChildren();}
-function loadMeasure(value,nextMode){clearPlace();$('#unit').value='km';$('#value').value=String(value);setMode(nextMode);$('#convertitore').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'center'});$('#value').focus({preventScroll:true});}
+function loadMeasure(value,nextMode){clearPlace();$('#unit').value='km';$('#value').value=String(value);setMode(nextMode);confirmMeasurement();$('#convertitore').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'center'});$('#value').focus({preventScroll:true});}
 mountPlaceSearch((place,area)=>{loadMeasure(area.km2,'area');const note=$('#selected-place');const link=document.createElement('a');link.href=place.source;link.target='_blank';link.rel='noopener noreferrer';link.textContent='Wikidata ↗';note.append(document.createTextNode(`${place.name} · ${place.description} · ${area.date} · `),link);note.hidden=false;});
 function update(){
  const parsed=parseMetric($('#value').value,language);let error=parsed.error;let ratio;
@@ -20,7 +24,9 @@ function update(){
 }
 function setMode(next){mode=next;for(const m of ['length','area'])$('#'+m).setAttribute('aria-pressed',String(m===mode));for(const option of $('#unit').options)option.textContent=option.value==='m'?(mode==='area'?'m²':language==='it'?'metri':'meters'):option.value+(mode==='area'?'²':'');update();}
 for(const m of ['length','area'])$('#'+m).addEventListener('click',()=>{clearPlace();setMode(m);});
-$('#value').addEventListener('input',()=>{clearPlace();update();});$('#unit').addEventListener('change',()=>{clearPlace();update();});
+$('#value').addEventListener('input',()=>{lastConfirmation=undefined;clearPlace();update();});
+$('#value').addEventListener('change',confirmMeasurement);
+$('#value').addEventListener('keydown',event=>{if(event.key==='Enter')confirmMeasurement();});$('#unit').addEventListener('change',()=>{clearPlace();update();});
 function renderCatalog(){
  const query=$('#search').value.trim().toLocaleLowerCase(language);
  const items=localizedCatalog.filter(i=>(category==='Tutti'||i.group===category)&&`${i.name} ${i.detail}`.toLocaleLowerCase(language).includes(query));

@@ -1,0 +1,13 @@
+{
+ "$schema":"node_modules/wrangler/config-schema.json",
+ "name":"texas-converter-counter",
+ "main":"worker.js",
+ "compatibility_date":"2026-09-05",
+ "compatibility_flags":["nodejs_compat"],
+ "account_id":"a187bcdb8073bee9e8af30405b848385",
+ "durable_objects":{"bindings":[{"name":"TOTALS","class_name":"MeasurementTotal"}]},
+ "migrations":[{"tag":"v1","new_sqlite_classes":["MeasurementTotal"]}],
+ "ratelimits":[{"name":"LIMITER","namespace_id":"1001","simple":{"limit":20,"period":60}}],
+ "vars":{"ALLOWED_ORIGIN":"https://siriusmac.github.io"},
+ "observability":{"enabled":true,"head_sampling_rate":0.01}
+}

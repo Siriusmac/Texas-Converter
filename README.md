@@ -1,6 +1,6 @@
 # Texas Converter
 
-Una webapp in italiano e inglese che converte lunghezze e superfici metriche in frazioni, multipli e sottomultipli del Texas. Interfaccia western responsive, illustrazione originale e font locale; nessun account o backend proprietario. La ricerca online facoltativa consulta Wikidata.
+Una webapp in italiano e inglese che converte lunghezze e superfici metriche in frazioni, multipli e sottomultipli del Texas. Interfaccia western responsive, illustrazione originale e font locale; nessun account richiesto ai visitatori. Il contatore globale usa un piccolo servizio Cloudflare. La ricerca online facoltativa consulta Wikidata.
 
 ## Avvio
 
@@ -79,3 +79,25 @@ Indirizzo GitHub Pages: https://siriusmac.github.io/Texas-Converter/.
 Il workflow `.github/workflows/pages.yml` esegue i test, genera `dist/` e pubblica esclusivamente i file del sito su GitHub Pages a ogni push su `main`. È disponibile anche l'avvio manuale da GitHub Actions. Nelle impostazioni Pages della repository, la sorgente deve essere GitHub Actions. Non occorrono segreti personalizzati.
 
 Verificati build, 14 test automatici (inclusi riconoscimento della lingua principale e cache API separata per lingua), ricerche reali di Padova, Veneto e London, selezione con conversione, assenza di risultati e sostituzione della ricerca in corso nel browser integrato. Provati italiano e inglese, selettore lingua, filtri, numeri e errori, su desktop e viewport mobile 390×844. Safari e dispositivi fisici non ancora verificati.
+
+## Contatore globale
+
+Attivo dal 5 settembre 2026, con somme distinte per lunghezza e superficie. Conta valori positivi confermati con Invio o con la modifica completata del campo, e confronti selezionati dall’atlante o dai risultati online. Non conta visite, valori preimpostati, digitazione o risultati soltanto visualizzati. Conferme consecutive della stessa misura sono ignorate finché non viene modificato il valore o confermata una misura diversa. Per confermare dopo un cambio di unità o tipo, premere Invio nel campo.
+
+I visitatori condividono i totali; non sono conteggi di utenti unici. La somma conserva la rappresentazione decimale dei risultati senza perdere i contributi piccoli; l’interfaccia arrotonda a quattro cifre significative. Non esiste uno storico recuperabile delle conversioni precedenti all’attivazione.
+
+Il browser invia valore, unità, tipo, data e ID casuale dell’evento a `https://texas-converter-counter.siriusmac.workers.dev`. Il servizio ricalcola la conversione e conserva solo somme, numero di eventi e ID temporanei per evitare duplicati. Non salva nomi cercati, valore originale o profili utente, e non usa cookie. L’IP è usato transitoriamente da Cloudflare per limitare gli invii (20/minuto); valgono anche i normali log di infrastruttura Cloudflare. Gli ID scadono dopo 24 ore e vengono eliminati alla successiva scrittura.
+
+Le somme sono indicative: un endpoint pubblico senza login non può impedire tutte le manipolazioni; CORS, convalida e limite di frequenza riducono gli abusi. Errori di rete o limiti possono escludere una misura: l’app ritenta una volta con lo stesso ID e mostra indisponibilità, senza inventare un totale.
+
+Il sito rimane su GitHub Pages. Il servizio in `counter/` usa Workers e due Durable Objects SQLite, uno per dimensione, con scritture atomiche e deduplicazione. Sviluppo locale separato dai totali pubblici:
+
+```sh
+cd counter
+pnpm install --frozen-lockfile
+pnpm exec wrangler dev --port 8787 --var ALLOWED_ORIGIN:http://localhost:5173
+# In un secondo terminale, dalla radice:
+node server.mjs
+```
+
+Pubblicazione servizio (separata dal deploy GitHub Pages): `cd counter && pnpm exec wrangler deploy`. Verifica preliminare: `pnpm exec wrangler deploy --dry-run`; tipi generati: `pnpm exec wrangler types worker-configuration.d.ts`. Non inserire token nel repository. La CLI usa la sessione Cloudflare locale.

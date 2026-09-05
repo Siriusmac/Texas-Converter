@@ -5,3 +5,6 @@ dist/
 !.env.example
 .DS_Store
 *.log
+.wrangler/
+.dev.vars*
+counter/worker-configuration.d.ts

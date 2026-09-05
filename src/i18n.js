@@ -69,7 +69,7 @@ export function localizePage() {
     '#online-search':'Search online', '.atlas-hint':'Each row identifies the measurement being compared. Select it to convert.',
     '#empty':'No matches in the atlas. For a city or region, try “Search online”.', '#more':'Show more comparisons ↓',
     'th:nth-child(1)':'PLACE / OBJECT', 'th:nth-child(2)':'IN TEXAS', 'th:nth-child(3)':'MEASUREMENT', 'th:nth-child(4)':'METRIC VALUE', 'th .sr-only':'Source',
-    '.method h3':'One state. Two units.', 'footer span':'★  Serious measurements. Not-so-humble units.', 'footer a':'Texas Converter on GitHub ↗',
+    '#global-counter':'Loading the global counter…', '#counter-help':'Totals since September 5, 2026. Count a measurement by pressing Enter or leaving the field, or by selecting a comparison. Lengths and areas are added separately.', '.method h3':'One state. Two units.', 'footer span':'★  Serious measurements. Not-so-humble units.', 'footer a':'Texas Converter on GitHub ↗',
   };
   for (const [selector,value] of Object.entries(text)) document.querySelector(selector).textContent = value;
   const html = {
