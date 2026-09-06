@@ -62,10 +62,11 @@ export function localizePage() {
   if (language === 'it') return;
   document.title = 'Texas Converter — Everything is measured in Texas';
   const text = {
+    '#bay-label':'Calculator approved by Michael Bay', '#bay-note':'Imaginary certification. Explosions not included.',
     '.skip':'Skip to converter', 'nav a[href="#convertitore"]':'Converter', 'nav a[href="#atlante"]':'Atlas', 'nav a[href="#texas"]':'About Texas',
     '#length':'↔  Length', '#area':'▧  Area', 'label[for="value"]':'Your measurement', 'label[for="unit"]':'Unit',
     '#unit option[value="m"]':'meters', '#input-help':'Decimal point or comma, without thousands separators.',
-    '.result-caption':'IN TEXAN UNITS', '.atlas-heading h2':'A world of Texas.', '.atlas-heading p':'From next door to the edge of the solar system.',
+    '.result-caption':'IN TEXAN UNITS', '.atlas-heading h2':'Texas as a universal yardstick.', '.atlas-heading p':'From next door to the edge of the solar system.',
     '#online-search':'Search online', '.atlas-hint':'Each row identifies the measurement being compared. Select it to convert.',
     '#empty':'No matches in the atlas. For a city or region, try “Search online”.', '#more':'Show more comparisons ↓',
     'th:nth-child(1)':'PLACE / OBJECT', 'th:nth-child(2)':'IN TEXAS', 'th:nth-child(3)':'MEASUREMENT', 'th:nth-child(4)':'METRIC VALUE', 'th .sr-only':'Source',
@@ -73,7 +74,8 @@ export function localizePage() {
   };
   for (const [selector,value] of Object.entries(text)) document.querySelector(selector).textContent = value;
   const html = {
-    '.hero h1':'Everything is bigger<br>in Texas.',
+    '#quote-president':'<strong>President:</strong> “How big are we?”', '#quote-truman':'<strong>Dan Truman:</strong> “It’s the size of Texas, Mr. President.”',
+    '.hero h1':'A world<br>measured in Texas.',
     '.hero p':'Meters, kilometers, planets.<br class="mobile-break"> Everything is measured in Texas here.',
     '.online-help':'Filter the atlas as you type. For cities and regions not listed, press <strong>Search online</strong>: the name is sent to Wikidata to find its area. Check the place boundaries and the date of the measurement.',
     'summary':'How we do the math <span aria-hidden="true">＋</span>',
@@ -92,7 +94,7 @@ export function localizePage() {
     ['nav','aria-label','Main navigation'], ['#language','aria-label','Language'], ['#convertitore','aria-label','Measurement converter'],
     ['.tabs','aria-label','Measurement type'], ['#filters','aria-label','Atlas categories'], ['#online-panel','aria-label','Places found online'],
     ['#search','aria-label','Search the atlas or online'], ['#search','placeholder','Find a place or a planet…'],
-    ['.hero img','alt','Western engraving with longhorn horns, cacti and Texas mountains'],
+    ['.hero img','alt','Texas caricature with a longhorn, cowboy hat, boots, lone star, decorative revolvers and dollar bills'],
     ['meta[name="description"]','content','Convert metric lengths and areas into Texas. A western converter, from microscopic to astronomical.'],
     ['link[rel="manifest"]','href','./public/site-en.webmanifest'],
   ];

@@ -101,3 +101,7 @@ node server.mjs
 ```
 
 Pubblicazione servizio (separata dal deploy GitHub Pages): `cd counter && pnpm exec wrangler deploy`. Verifica preliminare: `pnpm exec wrangler deploy --dry-run`; tipi generati: `pnpm exec wrangler types worker-configuration.d.ts`. Non inserire token nel repository. La CLI usa la sessione Cloudflare locale.
+
+## Identità visiva
+
+Marchio a due righe compatte con CONVERTER distribuito sulla larghezza di TEXAS; titoli aggiornati in italiano e inglese. Il nuovo longhorn caricaturale e il prompt usato sono documentati in [docs/hero-art.md](docs/hero-art.md). La citazione di Armageddon accompagna l’atlante e il bollino Michael Bay è esplicitamente scherzoso.
