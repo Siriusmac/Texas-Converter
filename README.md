@@ -105,3 +105,5 @@ Pubblicazione servizio (separata dal deploy GitHub Pages): `cd counter && pnpm e
 ## Identità visiva
 
 Marchio a due righe compatte con CONVERTER distribuito sulla larghezza di TEXAS; titoli aggiornati in italiano e inglese. La caricatura di Walker Texas Ranger e il prompt usato sono documentati in [docs/hero-art.md](docs/hero-art.md). La citazione di Armageddon accompagna l’atlante e il timbro rotondo “Michael Bay official calculator” è un riferimento umoristico.
+
+La testata usa due colonne con spazio esplicito e immagine contenuta al 100%; sotto 700 px passa a una colonna. Il timbro affianca il sottotitolo e si ridimensiona con lo schermo. Verificati italiano/inglese e larghezze 390, 844 e 1024 px.

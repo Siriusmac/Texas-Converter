@@ -16,3 +16,13 @@ footer{flex-wrap:wrap}.counter-footer{flex:1 0 100%;border-top:1px solid #d6c9b5
 .atlas-heading h2{font-size:clamp(29px,3.3vw,42px);text-wrap:balance}.movie-quote{margin:0 0 25px;padding:15px 20px;border-left:3px solid #ad3f26;background:#f2eadf66}.movie-quote blockquote{margin:0}.movie-quote p{margin:0 0 5px;font-size:15px;line-height:1.55}.movie-quote strong{font-weight:normal;color:#943b26}.movie-quote figcaption{font-size:12px;color:#776754;margin-top:9px}.movie-quote cite{font-style:italic}
 @media(max-width:850px){.hero img{height:310px}.hero h1,html[lang=en] .hero h1{font-size:43px}}
 @media(max-width:600px){.brand-type{gap:2px}.brand .brand-type small{font-size:8px}.hero h1,html[lang=en] .hero h1{font-size:42px;line-height:1.06;letter-spacing:-1.2px}.hero img{width:100%;height:auto;aspect-ratio:3/2;margin:15px 0 5px}.bay-seal{margin-top:18px;width:120px;height:120px}.atlas-heading h2{font-size:31px}.movie-quote{padding:12px 14px;margin-bottom:20px}.movie-quote p{font-size:14px}}
+
+/* Keep the hero within its tracks, including tablet and landscape widths. */
+.hero{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);min-height:0;padding:40px 0;align-items:center}
+.hero>div{min-width:0;display:grid;grid-template-columns:minmax(0,1fr) 100px;gap:20px 18px;align-items:center}
+.hero h1,html[lang=en] .hero h1{grid-column:1/-1;font-size:clamp(36px,4.5vw,62px);line-height:1.08;letter-spacing:-1.3px;margin:0;max-width:12ch;text-wrap:balance}
+.hero p{font-size:clamp(16px,1.55vw,20px);line-height:1.5;min-width:0;margin:0}
+.hero .bay-seal{width:100px;height:100px;margin:0;justify-self:end}
+.hero>img{display:block;width:100%;max-width:100%;height:auto;aspect-ratio:3/2;object-fit:contain;object-position:center;margin:0;mask-image:none}
+@media(max-width:900px) and (min-width:701px){.hero>div{grid-template-columns:minmax(0,1fr) 80px;gap:18px 12px}.hero .bay-seal{width:80px;height:80px}.hero h1,html[lang=en] .hero h1{font-size:38px}}
+@media(max-width:700px){.hero{display:grid;grid-template-columns:minmax(0,1fr);gap:24px;padding:30px 0 24px}.hero>div{grid-template-columns:minmax(0,1fr) 88px;gap:18px 14px}.hero h1,html[lang=en] .hero h1{font-size:clamp(36px,9.7vw,48px);max-width:14ch}.hero .bay-seal{width:88px;height:88px}.hero>img{max-width:520px;justify-self:center}.hero .mobile-break{display:none}}
