@@ -104,4 +104,4 @@ Pubblicazione servizio (separata dal deploy GitHub Pages): `cd counter && pnpm e
 
 ## Identità visiva
 
-Marchio a due righe compatte con CONVERTER distribuito sulla larghezza di TEXAS; titoli aggiornati in italiano e inglese. Il nuovo longhorn caricaturale e il prompt usato sono documentati in [docs/hero-art.md](docs/hero-art.md). La citazione di Armageddon accompagna l’atlante e il bollino Michael Bay è esplicitamente scherzoso.
+Marchio a due righe compatte con CONVERTER distribuito sulla larghezza di TEXAS; titoli aggiornati in italiano e inglese. La caricatura di Walker Texas Ranger e il prompt usato sono documentati in [docs/hero-art.md](docs/hero-art.md). La citazione di Armageddon accompagna l’atlante e il timbro rotondo “Michael Bay official calculator” è un riferimento umoristico.

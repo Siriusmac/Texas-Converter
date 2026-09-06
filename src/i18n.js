@@ -62,7 +62,6 @@ export function localizePage() {
   if (language === 'it') return;
   document.title = 'Texas Converter — Everything is measured in Texas';
   const text = {
-    '#bay-label':'Calculator approved by Michael Bay', '#bay-note':'Imaginary certification. Explosions not included.',
     '.skip':'Skip to converter', 'nav a[href="#convertitore"]':'Converter', 'nav a[href="#atlante"]':'Atlas', 'nav a[href="#texas"]':'About Texas',
     '#length':'↔  Length', '#area':'▧  Area', 'label[for="value"]':'Your measurement', 'label[for="unit"]':'Unit',
     '#unit option[value="m"]':'meters', '#input-help':'Decimal point or comma, without thousands separators.',
@@ -94,7 +93,7 @@ export function localizePage() {
     ['nav','aria-label','Main navigation'], ['#language','aria-label','Language'], ['#convertitore','aria-label','Measurement converter'],
     ['.tabs','aria-label','Measurement type'], ['#filters','aria-label','Atlas categories'], ['#online-panel','aria-label','Places found online'],
     ['#search','aria-label','Search the atlas or online'], ['#search','placeholder','Find a place or a planet…'],
-    ['.hero img','alt','Texas caricature with a longhorn, cowboy hat, boots, lone star, decorative revolvers and dollar bills'],
+    ['.hero img','alt','Caricature of Walker Texas Ranger firing into the air, with cowboy hat, boots, stars and dollar bills'],
     ['meta[name="description"]','content','Convert metric lengths and areas into Texas. A western converter, from microscopic to astronomical.'],
     ['link[rel="manifest"]','href','./public/site-en.webmanifest'],
   ];
