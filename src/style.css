@@ -52,3 +52,7 @@ body{background:#fcf2e4}header,.converter,.input-side,.result,.atlas,details,.fi
  .converter .bridge{display:none}
  .result{padding:24px;border-radius:0 0 8px 8px;min-height:173px}
 }
+
+.converter .bridge svg{display:block;width:28px;height:28px}
+.converter .result{background:#ad3f26;color:#fff}.converter .result #answer{color:#fff}
+@media(min-width:761px){.converter .result{margin:-24px -24px -24px 0;padding:24px;border-radius:0 8px 8px 0}}
