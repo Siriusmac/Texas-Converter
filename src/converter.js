@@ -1,6 +1,5 @@
 import {t, localeFor} from './i18n.js';
-export const TEXAS={length:773*1.609344,area:695662}; // km and km²; width is a geographic approximation.
-export const UNITS={mm:1e-6,cm:1e-5,m:1e-3,km:1};
+export {TEXAS,UNITS,toTexas as convert} from './units.js';
 export function parseMetric(raw, lang='it'){
  const s=String(raw).trim();
  if(!s) return {error:t('Inserisci una misura per cominciare.',lang)};
@@ -10,7 +9,6 @@ export function parseMetric(raw, lang='it'){
  if(value===0 && /[1-9]/.test(s.split(/[eE]/)[0]))return {error:t('Questo numero è troppo piccolo per essere rappresentato.',lang)};
  return {value};
 }
-export function convert(value,unit,mode){if(!(unit in UNITS)||!(mode in TEXAS)||!Number.isFinite(value)||value<0)throw new RangeError('Invalid conversion');return value*(mode==='area'?UNITS[unit]**2:UNITS[unit])/TEXAS[mode];}
 export function format(n, lang='it'){return new Intl.NumberFormat(localeFor(lang),{maximumSignificantDigits:4,notation:n!==0&&(Math.abs(n)<.0001||Math.abs(n)>=1e12)?'scientific':'standard'}).format(n);}
 export function fraction(n, lang='it'){
  if(n===0)return '0 Texas';

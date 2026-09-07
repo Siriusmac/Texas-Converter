@@ -1,3 +1,4 @@
+import {fromKilometers} from './units.js';
 import {language, localeFor, t} from './i18n.js';
 import {searchPlaces} from './places.js';
 import {TEXAS, format} from './converter.js';
@@ -62,12 +63,13 @@ export function mountPlaceSearch(onSelect) {
         if (place.areas.length > 1) measurements.append(element('p', t('La fonte riporta più valori: scegli quello da usare.')));
         for (const area of place.areas) {
           const measurement = element('div', '', 'place-measurement');
-          const metric = new Intl.NumberFormat(localeFor(language), {maximumSignificantDigits:10}).format(area.km2);
-          measurement.append(element('strong', `${metric} km² ≈ ${format(area.km2 / TEXAS.area,language)} Texas`));
+          const displayUnit=language==='en'?'mi²':'km²';
+          const metric = new Intl.NumberFormat(localeFor(language), {maximumSignificantDigits:10}).format(fromKilometers(area.km2,language==='en'?'mi':'km','area'));
+          measurement.append(element('strong', `${metric} ${displayUnit} ≈ ${format(area.km2 / TEXAS.area,language)} Texas`));
           measurement.append(element('small', `${area.date} · ${area.referenced ? t('Con riferimenti nella scheda') : t('Senza riferimenti nella scheda')}`));
           const use = element('button', t('Usa nel convertitore'));
           use.type = 'button';
-          use.setAttribute('aria-label', `${language==='it'?'Converti':'Convert'} ${place.name}, ${metric} km²`);
+          use.setAttribute('aria-label', `${language==='it'?'Converti':'Convert'} ${place.name}, ${metric} ${displayUnit}`);
           use.addEventListener('click', () => onSelect(place, area));
           measurement.append(use);
           measurements.append(measurement);

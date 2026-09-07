@@ -107,3 +107,11 @@ Pubblicazione servizio (separata dal deploy GitHub Pages): `cd counter && pnpm e
 Marchio a due righe compatte con CONVERTER distribuito sulla larghezza di TEXAS; titoli aggiornati in italiano e inglese. La caricatura di Walker Texas Ranger e il prompt usato sono documentati in [docs/hero-art.md](docs/hero-art.md). La citazione di Armageddon accompagna l’atlante e il timbro rotondo “Michael Bay official calculator” è un riferimento umoristico.
 
 La testata usa due colonne con spazio esplicito e immagine contenuta al 100%; sotto 700 px passa a una colonna. Il timbro affianca il sottotitolo e si ridimensiona con lo schermo. Verificati italiano/inglese e larghezze 390, 844 e 1024 px.
+
+## Unità imperiali e sfondo crema
+
+La versione italiana mantiene mm, cm, m e km. Quella inglese aggiunge in, ft, yd e mi (e le rispettive unità quadrate), organizzate nei gruppi Imperial e Metric, con mi selezionato inizialmente. Atlante, caricamento di un confronto, ricerca geografica e riferimenti del Texas usano miglia o miglia quadrate in inglese. I valori originali del catalogo e di Wikidata rimangono in km/km²; la conversione della visualizzazione non altera le fonti.
+
+I fattori internazionali seguono [NIST](https://www.nist.gov/pml/us-surveyfoot/revised-unit-conversion-factors): pollice 0,0254 m, piede 0,3048 m, iarda 0,9144 m, miglio 1609,344 m. Per le superfici si eleva il fattore al quadrato. Frontend e contatore importano lo stesso modulo `src/units.js`; nessuna modifica allo schema o azzeramento dei totali. Pubblicare il Worker prima del frontend quando si aggiungono unità accettate.
+
+Sfondo pagina `#fcf2e4`, campionato dalle zone crema dell’illustrazione; header, campi e riquadri bianchi. L’immagine è visualizzata senza fusione multiply. Il sottotitolo conserva l’a capo esplicito. La build assegna una versione comune ai moduli JavaScript e agli stili per evitare combinazioni di file vecchi e nuovi dalla cache.

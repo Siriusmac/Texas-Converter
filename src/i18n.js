@@ -1,3 +1,4 @@
+import {IMPERIAL_UNITS,fromKilometers,TEXAS} from './units.js';
 export function detectLanguage(languages) {
   const first = Array.isArray(languages) ? languages[0] : languages;
   return /^it(?:-|$)/i.test(first || '') ? 'it' : 'en';
@@ -60,6 +61,10 @@ export function localizePage() {
     const url = new URL(location.href); url.searchParams.set('lang', select.value); location.assign(url);
   });
   if (language === 'it') return;
+  const imperial=document.createElement('optgroup');imperial.label='Imperial';
+  for(const unit of IMPERIAL_UNITS){const option=document.createElement('option');option.value=unit;option.textContent=unit;option.title={in:'Inches',ft:'Feet',yd:'Yards',mi:'Miles'}[unit];imperial.append(option);}
+  const metric=document.createElement('optgroup');metric.label='Metric';metric.append(...document.querySelectorAll('#unit option'));
+  document.querySelector('#unit').replaceChildren(imperial,metric);document.querySelector('#unit').value='mi';
   document.title = 'Texas Converter — Everything is measured in Texas';
   const text = {
     '.skip':'Skip to converter', 'nav a[href="#convertitore"]':'Converter', 'nav a[href="#atlante"]':'Atlas', 'nav a[href="#texas"]':'About Texas',
@@ -68,23 +73,23 @@ export function localizePage() {
     '.result-caption':'IN TEXAN UNITS', '.atlas-heading h2':'Texas as a universal yardstick.', '.atlas-heading p':'From next door to the edge of the solar system.',
     '#online-search':'Search online', '.atlas-hint':'Each row identifies the measurement being compared. Select it to convert.',
     '#empty':'No matches in the atlas. For a city or region, try “Search online”.', '#more':'Show more comparisons ↓',
-    'th:nth-child(1)':'PLACE / OBJECT', 'th:nth-child(2)':'IN TEXAS', 'th:nth-child(3)':'MEASUREMENT', 'th:nth-child(4)':'METRIC VALUE', 'th .sr-only':'Source',
+    'th:nth-child(1)':'PLACE / OBJECT', 'th:nth-child(2)':'IN TEXAS', 'th:nth-child(3)':'MEASUREMENT', 'th:nth-child(4)':'IMPERIAL VALUE', 'th .sr-only':'Source',
     '#global-counter':'Loading the global counter…', '#counter-help':'Totals since September 5, 2026. Count a measurement by pressing Enter or leaving the field, or by selecting a comparison. Lengths and areas are added separately.', '.method h3':'One state. Two units.', 'footer span':'★  Serious measurements. Not-so-humble units.', 'footer a':'Texas Converter on GitHub ↗',
   };
   for (const [selector,value] of Object.entries(text)) document.querySelector(selector).textContent = value;
   const html = {
     '#quote-president':'<strong>President:</strong> “How big are we?”', '#quote-truman':'<strong>Dan Truman:</strong> “It’s the size of Texas, Mr. President.”',
     '.hero h1':'A world<br>measured in Texas.',
-    '.hero p':'Meters, kilometers, planets.<br class="mobile-break"> Everything is measured in Texas here.',
+    '.hero p':'Inches, feet, miles, planets.<br class="mobile-break"> Everything is measured in Texas here.',
     '.online-help':'Filter the atlas as you type. For cities and regions not listed, press <strong>Search online</strong>: the name is sent to Wikidata to find its area. Check the place boundaries and the date of the measurement.',
     'summary':'How we do the math <span aria-hidden="true">＋</span>',
   };
   // These strings are application-owned constants, never search/API content.
   for (const [selector,value] of Object.entries(html)) document.querySelector(selector).innerHTML = value;
   const paragraphs = [
-    'For lengths, 1 Texas is the maximum east–west extent: approximately 773 miles, converted to <strong>1,244.022912 km</strong>. This is an approximate geographic reference, not a measurement accurate to the millimeter. <a href="https://texashistory.unt.edu/ark:/67531/metapth279642/m1/78/" target="_blank" rel="noopener noreferrer">Texas Almanac ↗</a>',
-    'For areas, 1 Texas is <strong>695,662 km²</strong>, the total area including water in the Census 2010 reference. It is not the square of the state’s width. <a href="https://www.census.gov/geographies/reference-files/2010/geo/state-area.html" target="_blank" rel="noopener noreferrer">U.S. Census Bureau ↗</a>',
-    'We divide km or km² by the corresponding reference. Fractions are approximate (within 1% when small denominators are used). MilliTexas = one thousandth of Texas; megaTexas = one million Texas. These playful prefixes are not official units.',
+    'For lengths, 1 Texas is the maximum east–west extent: <strong>approximately 773 miles</strong> (1,244.022912 km). This is an approximate geographic reference, not a measurement accurate to the inch. <a href="https://texashistory.unt.edu/ark:/67531/metapth279642/m1/78/" target="_blank" rel="noopener noreferrer">Texas Almanac ↗</a>',
+    `For areas, 1 Texas is <strong>approximately ${new Intl.NumberFormat('en-US',{maximumFractionDigits:0}).format(fromKilometers(TEXAS.area,'mi','area'))} square miles</strong> (695,662 km²), the total area including water in the Census 2010 reference. It is not the square of the state’s width. <a href="https://www.census.gov/geographies/reference-files/2010/geo/state-area.html" target="_blank" rel="noopener noreferrer">U.S. Census Bureau ↗</a>`,
+    'Choose inches, feet, yards or miles for lengths, and their squared units for areas. Metric units remain available. We use international definitions: 1 inch = 0.0254 m, 1 foot = 0.3048 m, 1 yard = 0.9144 m and 1 mile = 1.609344 km. Area factors are squared. We normalize to km or km² before dividing by the Texas reference. <a href="https://www.nist.gov/pml/us-surveyfoot/revised-unit-conversion-factors" target="_blank" rel="noopener noreferrer">NIST conversion factors ↗</a> Fractions are approximate (within 1% when small denominators are used). MilliTexas = one thousandth of Texas; megaTexas = one million Texas. These playful prefixes are not official units.',
     'For planets we use NASA’s equatorial diameters; for the Moon and Sun, rounded diameters. Surface areas are spherical estimates, π × diameter²: they do not account for flattening or terrain. For gas giants and the Sun, these do not represent a solid surface. Continents follow a seven-continent model with indicative areas and conventional boundaries; Oceania includes Australia and Pacific islands.',
     'Sources for each comparison are available through the ↗ links in the table. Conversions run locally. Only pressing “Search online” sends the search text to Wikidata. Online search is independent of atlas filters and uses the area of the selected geographic entity, not its width. Data or references may be missing: we do not assume they are current or official. Deprecated values, partial areas and unknown units are excluded; available dates remain visible.',
   ];
@@ -94,7 +99,7 @@ export function localizePage() {
     ['.tabs','aria-label','Measurement type'], ['#filters','aria-label','Atlas categories'], ['#online-panel','aria-label','Places found online'],
     ['#search','aria-label','Search the atlas or online'], ['#search','placeholder','Find a place or a planet…'],
     ['.hero img','alt','Caricature of Walker Texas Ranger firing into the air, with cowboy hat, boots, stars and dollar bills'],
-    ['meta[name="description"]','content','Convert metric lengths and areas into Texas. A western converter, from microscopic to astronomical.'],
+    ['meta[name="description"]','content','Convert imperial and metric lengths and areas into Texas. A western converter, from microscopic to astronomical.'],
     ['link[rel="manifest"]','href','./public/site-en.webmanifest'],
   ];
   for (const [selector,attribute,value] of attributes) document.querySelector(selector).setAttribute(attribute,value);

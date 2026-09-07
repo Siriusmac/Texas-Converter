@@ -1,3 +1,4 @@
+import {fromKilometers,unitLabel} from './units.js';
 import {mountCounter} from './global-counter.js';
 import {language, t, localizePage, localizeCatalog} from './i18n.js';
 import {mountPlaceSearch} from './place-search.js';
@@ -11,7 +12,7 @@ const localizedCatalog=localizeCatalog(catalog);
 const $=s=>document.querySelector(s);
 let mode='length',category='Tutti',limit=8;
 function clearPlace(){$('#selected-place').hidden=true;$('#selected-place').replaceChildren();}
-function loadMeasure(value,nextMode){clearPlace();$('#unit').value='km';$('#value').value=String(value);setMode(nextMode);confirmMeasurement();$('#convertitore').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'center'});$('#value').focus({preventScroll:true});}
+function loadMeasure(value,nextMode){clearPlace();const unit=language==='en'?'mi':'km';$('#unit').value=unit;$('#value').value=String(fromKilometers(value,unit,nextMode));setMode(nextMode);confirmMeasurement();$('#convertitore').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'center'});$('#value').focus({preventScroll:true});}
 mountPlaceSearch((place,area)=>{loadMeasure(area.km2,'area');const note=$('#selected-place');const link=document.createElement('a');link.href=place.source;link.target='_blank';link.rel='noopener noreferrer';link.textContent='Wikidata ↗';note.append(document.createTextNode(`${place.name} · ${place.description} · ${area.date} · `),link);note.hidden=false;});
 function update(){
  const parsed=parseMetric($('#value').value,language);let error=parsed.error;let ratio;
@@ -20,9 +21,9 @@ function update(){
  $('#answer').replaceChildren(document.createTextNode(error?'—':format(ratio,language)),Object.assign(document.createElement('span'),{textContent:' Texas'}));
  $('#fraction').textContent=error?t('Il Texas ti aspetta.'):`≈ ${fraction(ratio,language)} ${language==='it'?(mode==='length'?'in larghezza':'di superficie'):(mode==='length'?'in width':'in area')}`;
  $('#scaled').textContent=error?'':`${language==='it'?'Equivale a':'Equivalent to'} ${scaled(ratio,language)}`;
- $('#reference').textContent=language==='en'?(mode==='length'?'↔  1 Texas ≈ 1,244.02 km wide':'▧  1 Texas = 695,662 km² in area'):mode==='length'?'↔  1 Texas ≈ 1.244,02 km di larghezza':'▧  1 Texas = 695.662 km² di superficie';
+ $('#reference').textContent=language==='en'?(mode==='length'?'↔  1 Texas ≈ 773 miles wide':`▧  1 Texas ≈ ${new Intl.NumberFormat('en-US',{maximumFractionDigits:0}).format(fromKilometers(TEXAS.area,'mi','area'))} square miles in area`):mode==='length'?'↔  1 Texas ≈ 1.244,02 km di larghezza':'▧  1 Texas = 695.662 km² di superficie';
 }
-function setMode(next){mode=next;for(const m of ['length','area'])$('#'+m).setAttribute('aria-pressed',String(m===mode));for(const option of $('#unit').options)option.textContent=option.value==='m'?(mode==='area'?'m²':language==='it'?'metri':'meters'):option.value+(mode==='area'?'²':'');update();}
+function setMode(next){mode=next;for(const m of ['length','area'])$('#'+m).setAttribute('aria-pressed',String(m===mode));for(const option of $('#unit').options)option.textContent=unitLabel(option.value,mode,language);update();}
 for(const m of ['length','area'])$('#'+m).addEventListener('click',()=>{clearPlace();setMode(m);});
 $('#value').addEventListener('input',()=>{lastConfirmation=undefined;clearPlace();update();});
 $('#value').addEventListener('change',confirmMeasurement);
@@ -32,10 +33,11 @@ function renderCatalog(){
  const items=localizedCatalog.filter(i=>(category==='Tutti'||i.group===category)&&`${i.name} ${i.detail}`.toLocaleLowerCase(language).includes(query));
  $('#count').textContent=`${items.length} ${language==='it'?'confronti':'comparisons'}`;$('#rows').replaceChildren();
  for(const item of items.slice(0,limit)){
+  const displayUnit=language==='en'?'mi':'km';const displayedMeasure=`${format(fromKilometers(item.value,displayUnit,item.mode),language)} ${unitLabel(displayUnit,item.mode,language)}`;
   const tr=document.createElement('tr');const cell=document.createElement('td');const btn=document.createElement('button');btn.className='item';btn.textContent=item.name;btn.setAttribute('aria-label',`${language==='it'?'Converti':'Convert'} ${item.name}: ${item.detail}`);
   btn.addEventListener('click',()=>loadMeasure(item.value,item.mode));
-  cell.append(btn);const mobile=document.createElement('span');mobile.className='mobile-detail';mobile.textContent=`${item.detail} · ${format(item.value,language)} ${item.mode==='area'?'km²':'km'}`;cell.append(mobile);tr.append(cell);
-  for(const [text,cls] of [[`${format(item.value/TEXAS[item.mode],language)} Texas`,'texas-value'],[item.detail,'detail'],[`${format(item.value,language)} ${item.mode==='area'?'km²':'km'}`,'metric']]){const td=document.createElement('td');td.className=cls;td.textContent=text;tr.append(td);}
+  cell.append(btn);const mobile=document.createElement('span');mobile.className='mobile-detail';mobile.textContent=`${item.detail} · ${displayedMeasure}`;cell.append(mobile);tr.append(cell);
+  for(const [text,cls] of [[`${format(item.value/TEXAS[item.mode],language)} Texas`,'texas-value'],[item.detail,'detail'],[`${displayedMeasure}`,'metric']]){const td=document.createElement('td');td.className=cls;td.textContent=text;tr.append(td);}
   const source=document.createElement('td');const link=document.createElement('a');link.href=item.source;link.textContent='↗';link.target='_blank';link.rel='noopener noreferrer';link.setAttribute('aria-label',`${language==='it'?'Fonte':'Source'}: ${item.name}, ${item.detail}`);source.append(link);tr.append(source);$('#rows').append(tr);
  }
  $('#empty').hidden=items.length!==0;$('#more').hidden=items.length<=limit;

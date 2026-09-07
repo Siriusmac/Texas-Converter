@@ -2,12 +2,12 @@
   "id": "../",
   "name": "Texas Converter",
   "short_name": "Texas",
-  "description": "Metric lengths and areas, measured in Texas.",
+  "description": "Imperial and metric lengths and areas, measured in Texas.",
   "lang": "en",
   "start_url": "../",
   "scope": "../",
   "display": "standalone",
-  "background_color": "#faf7f0",
+  "background_color": "#fcf2e4",
   "theme_color": "#ad3f26",
   "icons": [
     {
