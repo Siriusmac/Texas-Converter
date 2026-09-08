@@ -12,5 +12,5 @@ export function toTexas(value,unit,mode){
  return value*unitFactor(unit,mode)/TEXAS[mode];
 }
 export function fromKilometers(value,unit,mode){return value/unitFactor(unit,mode);}
-export function availableUnits(lang){return lang==='en'?[...IMPERIAL_UNITS,...METRIC_UNITS]:[...METRIC_UNITS];}
+export function availableUnits(lang){return lang==='en'?[...IMPERIAL_UNITS,...METRIC_UNITS]:[...METRIC_UNITS,...IMPERIAL_UNITS];}
 export function unitLabel(unit,mode,lang){return unit==='m'&&mode==='length'?(lang==='it'?'metri':'meters'):unit+(mode==='area'?'²':'');}

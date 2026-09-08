@@ -44,9 +44,9 @@ test('Wikidata query and cache are separated by language',async()=>{
   await assert.rejects(searchPlaces('x',{language:'en'}),/Enter 2 to 80/);
 });
 
-test('imperial unit choices are English-only; catalog loading retains physical size',async()=>{
+test('both languages offer imperial units in the appropriate order; catalog loading retains physical size',async()=>{
  const {availableUnits,fromKilometers,toTexas,unitLabel,TEXAS}=await import('../src/units.js');
- assert.deepEqual(availableUnits('it'),['mm','cm','m','km']);
+ assert.deepEqual(availableUnits('it'),['mm','cm','m','km','in','ft','yd','mi']);
  assert.deepEqual(availableUnits('en'),['in','ft','yd','mi','mm','cm','m','km']);
  for(const mode of ['length','area']){
   const value=fromKilometers(TEXAS[mode],'mi',mode);

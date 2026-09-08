@@ -60,11 +60,12 @@ export function localizePage() {
   select.addEventListener('change', () => {
     const url = new URL(location.href); url.searchParams.set('lang', select.value); location.assign(url);
   });
+  const imperial=document.createElement('optgroup');imperial.label=language==='it'?'Imperiali':'Imperial';
+  for(const unit of IMPERIAL_UNITS){const option=document.createElement('option');option.value=unit;option.textContent=unit;option.title=(language==='it'?{in:'Pollici',ft:'Piedi',yd:'Iarde',mi:'Miglia'}:{in:'Inches',ft:'Feet',yd:'Yards',mi:'Miles'})[unit];imperial.append(option);}
+  const metric=document.createElement('optgroup');metric.label=language==='it'?'Metriche':'Metric';metric.append(...document.querySelectorAll('#unit option'));
+  document.querySelector('#unit').replaceChildren(...(language==='it'?[metric,imperial]:[imperial,metric]));
+  document.querySelector('#unit').value=language==='it'?'km':'mi';
   if (language === 'it') return;
-  const imperial=document.createElement('optgroup');imperial.label='Imperial';
-  for(const unit of IMPERIAL_UNITS){const option=document.createElement('option');option.value=unit;option.textContent=unit;option.title={in:'Inches',ft:'Feet',yd:'Yards',mi:'Miles'}[unit];imperial.append(option);}
-  const metric=document.createElement('optgroup');metric.label='Metric';metric.append(...document.querySelectorAll('#unit option'));
-  document.querySelector('#unit').replaceChildren(imperial,metric);document.querySelector('#unit').value='mi';
   document.title = 'Texas Converter — Everything is measured in Texas';
   const text = {
     '.skip':'Skip to converter', 'nav a[href="#convertitore"]':'Converter', 'nav a[href="#atlante"]':'Atlas', 'nav a[href="#texas"]':'About Texas',

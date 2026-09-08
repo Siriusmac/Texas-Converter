@@ -110,7 +110,7 @@ La testata usa due colonne con spazio esplicito e immagine contenuta al 100%; so
 
 ## Unità imperiali e sfondo crema
 
-La versione italiana mantiene mm, cm, m e km. Quella inglese aggiunge in, ft, yd e mi (e le rispettive unità quadrate), organizzate nei gruppi Imperial e Metric, con mi selezionato inizialmente. Atlante, caricamento di un confronto, ricerca geografica e riferimenti del Texas usano miglia o miglia quadrate in inglese. I valori originali del catalogo e di Wikidata rimangono in km/km²; la conversione della visualizzazione non altera le fonti.
+Entrambe le lingue offrono mm, cm, m, km, in, ft, yd e mi (e le rispettive unità quadrate). In italiano i gruppi sono Metriche e Imperiali, con km selezionato inizialmente; in inglese Imperial e Metric, con mi selezionato inizialmente. Atlante, caricamento di un confronto, ricerca geografica e riferimenti del Texas usano miglia o miglia quadrate in inglese. I valori originali del catalogo e di Wikidata rimangono in km/km²; la conversione della visualizzazione non altera le fonti.
 
 I fattori internazionali seguono [NIST](https://www.nist.gov/pml/us-surveyfoot/revised-unit-conversion-factors): pollice 0,0254 m, piede 0,3048 m, iarda 0,9144 m, miglio 1609,344 m. Per le superfici si eleva il fattore al quadrato. Frontend e contatore importano lo stesso modulo `src/units.js`; nessuna modifica allo schema o azzeramento dei totali. Pubblicare il Worker prima del frontend quando si aggiungono unità accettate.
 
