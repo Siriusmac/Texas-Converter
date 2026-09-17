@@ -1,4 +1,5 @@
 import {fromKilometers,unitLabel} from './units.js';
+import {restoreInputViewport} from './input-viewport.js';
 import {mountCounter} from './global-counter.js';
 import {language, t, localizePage, localizeCatalog} from './i18n.js';
 import {mountPlaceSearch} from './place-search.js';
@@ -27,7 +28,16 @@ function setMode(next){mode=next;for(const m of ['length','area'])$('#'+m).setAt
 for(const m of ['length','area'])$('#'+m).addEventListener('click',()=>{clearPlace();setMode(m);});
 $('#value').addEventListener('input',()=>{lastConfirmation=undefined;clearPlace();update();});
 $('#value').addEventListener('change',confirmMeasurement);
-$('#value').addEventListener('keydown',event=>{if(event.key==='Enter')confirmMeasurement();});$('#unit').addEventListener('change',()=>{clearPlace();update();});
+restoreInputViewport($('#value'));
+$('#value').setAttribute('enterkeyhint','done');
+$('#value').addEventListener('keydown',event=>{
+ if(event.key!=='Enter'||event.isComposing)return;
+ event.preventDefault();
+ update();
+ if($('#value').getAttribute('aria-invalid')==='true')return;
+ confirmMeasurement();
+ $('#value').blur();
+});$('#unit').addEventListener('change',()=>{clearPlace();update();});
 function renderCatalog(){
  const query=$('#search').value.trim().toLocaleLowerCase(language);
  const items=localizedCatalog.filter(i=>(category==='Tutti'||i.group===category)&&`${i.name} ${i.detail}`.toLocaleLowerCase(language).includes(query));
