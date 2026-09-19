@@ -1,4 +1,5 @@
 import {t} from './i18n.js';
+import {extractCoordinates} from './distance.js';
 // Public Wikidata API; only explicit searches leave the browser.
 const ENDPOINT = 'https://www.wikidata.org/w/api.php';
 const UNIT_KM2 = { Q712226: 1, Q25343: 1e-6, Q35852: 0.01 };
@@ -45,6 +46,7 @@ export function extractPlace(entity, language='it') {
     description: entity.descriptions?.[language]?.value || entity.descriptions?.en?.value || t('Luogo geografico; verifica la scheda per identificarlo.',language),
     source: `https://www.wikidata.org/wiki/${entity.id}#P2046`,
     areas: extractAreas(entity,language),
+    coordinates: extractCoordinates(entity),
   };
 }
 

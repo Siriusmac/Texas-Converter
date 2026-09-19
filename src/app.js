@@ -3,6 +3,7 @@ import {restoreInputViewport} from './input-viewport.js';
 import {mountCounter} from './global-counter.js';
 import {language, t, localizePage, localizeCatalog} from './i18n.js';
 import {mountPlaceSearch} from './place-search.js';
+import {mountDistanceSearch} from './distance-search.js';
 import {TEXAS,parseMetric,convert,format,fraction,scaled} from './converter.js';
 import {catalog} from './catalog.js';
 localizePage();
@@ -15,6 +16,20 @@ let mode='length',category='Tutti',limit=8;
 function clearPlace(){$('#selected-place').hidden=true;$('#selected-place').replaceChildren();}
 function loadMeasure(value,nextMode){clearPlace();const unit=language==='en'?'mi':'km';$('#unit').value=unit;$('#value').value=String(fromKilometers(value,unit,nextMode));setMode(nextMode);confirmMeasurement();$('#convertitore').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'center'});$('#value').focus({preventScroll:true});}
 mountPlaceSearch((place,area)=>{loadMeasure(area.km2,'area');const note=$('#selected-place');const link=document.createElement('a');link.href=place.source;link.target='_blank';link.rel='noopener noreferrer';link.textContent='Wikidata ↗';note.append(document.createTextNode(`${place.name} · ${place.description} · ${area.date} · `),link);note.hidden=false;});
+mountDistanceSearch((a,b,km)=>{
+ loadMeasure(km,'length');
+ const note=$('#selected-place');
+ note.append(document.createTextNode(`${a.name} ↔ ${b.name} · ${language==='it'?'Distanza approssimata in linea d’aria (non su strada)':'Approximate straight-line distance (not a road route)'} · `));
+ for(const [index,place] of [a,b].entries()){
+  if(index)note.append(document.createTextNode(' · '));
+  const link=document.createElement('a');link.href=place.source.replace('#P2046','#P625');link.target='_blank';link.rel='noopener noreferrer';link.textContent=`${place.name} — Wikidata ↗`;note.append(link);
+ }
+ note.hidden=false;
+});
+const distanceMethod=document.createElement('p');
+distanceMethod.textContent=language==='it'?'Le distanze tra città sono approssimate e in linea d’aria: usiamo le coordinate dei luoghi selezionati da Wikidata e la distanza di cerchio massimo su una Terra sferica di raggio medio 6.371,0088 km. Non calcoliamo percorsi stradali. Coordinate mancanti, discordanti o non terrestri non vengono utilizzate.':'Distances between cities are approximate straight-line distances: we use the selected places’ Wikidata coordinates and the great-circle distance on a spherical Earth with mean radius 6,371.0088 km. We do not calculate road routes. Missing, conflicting or non-Earth coordinates are not used.';
+$('.method').append(distanceMethod);
+
 function update(){
  const parsed=parseMetric($('#value').value,language);let error=parsed.error;let ratio;
  if(!error){ratio=convert(parsed.value,$('#unit').value,mode);if(!Number.isFinite(ratio)||(parsed.value>0&&ratio===0))error=t('Valore fuori intervallo. Prova un’altra misura.');}
@@ -39,7 +54,7 @@ $('#value').addEventListener('keydown',event=>{
  $('#value').blur();
 });$('#unit').addEventListener('change',()=>{clearPlace();update();});
 function renderCatalog(){
- const query=$('#search').value.trim().toLocaleLowerCase(language);
+ const query=$('#search-mode').value==='distance'?'':$('#search').value.trim().toLocaleLowerCase(language);
  const items=localizedCatalog.filter(i=>(category==='Tutti'||i.group===category)&&`${i.name} ${i.detail}`.toLocaleLowerCase(language).includes(query));
  $('#count').textContent=`${items.length} ${language==='it'?'confronti':'comparisons'}`;$('#rows').replaceChildren();
  for(const item of items.slice(0,limit)){
@@ -54,4 +69,5 @@ function renderCatalog(){
 }
 for(const btn of $('#filters').children)btn.addEventListener('click',()=>{category=btn.dataset.category;limit=8;for(const b of $('#filters').children)b.setAttribute('aria-pressed',String(b===btn));renderCatalog();});
 $('#search').addEventListener('input',()=>{limit=8;renderCatalog();});$('#more').addEventListener('click',()=>{limit+=12;renderCatalog();});
+$('#search-mode').addEventListener('change',()=>{limit=8;renderCatalog();});
 update();renderCatalog();

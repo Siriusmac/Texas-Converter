@@ -56,3 +56,23 @@ body{background:#fcf2e4}header,.converter,.input-side,.result,.atlas,details,.fi
 .converter .bridge svg{display:block;width:28px;height:28px}
 .converter .result{background:#ad3f26;color:#fff}.converter .result #answer{color:#fff}
 @media(min-width:761px){.converter .result{margin:-24px -24px -24px 0;padding:24px;border-radius:0 8px 8px 0}}
+
+/* Area and straight-line distance search share the same entry point. */
+.filterbar{flex-wrap:wrap}
+.online-form{width:100%;display:flex;flex-wrap:wrap;align-items:stretch;gap:10px}
+.search-kind{display:flex;align-items:center;gap:8px;font-size:16px}
+.search-kind select,#distance-choices select{background:#fff;color:#30271f;border:1px solid #cbbba6;border-radius:5px;padding:10px;font:16px Georgia,serif;min-height:44px;min-width:0;max-width:100%}
+.online-form .search{flex:1;min-width:180px;width:auto}
+.online-form .search input{width:100%;min-width:0;font-size:16px}
+#destination-field[hidden],#distance-panel[hidden]{display:none}
+#distance-panel{border-block:1px solid #d9c5ad;background:#fff;padding:20px 0;margin:20px 0}
+#distance-status{font-size:16px;line-height:1.5}
+#distance-choices{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px}
+#distance-choices label{display:block;margin-bottom:8px}
+#distance-choices select{width:100%}
+#distance-choices p,#distance-result p{font:14px/1.6 Arial,sans-serif;overflow-wrap:anywhere}
+#distance-result:not(:empty){margin-top:16px;padding:20px;border-radius:6px;background:#ad3f26;color:#fff}
+#distance-result h3{margin:0;font-size:24px}
+#distance-result strong{font-size:26px;overflow-wrap:anywhere}
+#distance-result button{background:#fff;color:#92341f;border:0;border-radius:5px;padding:12px 16px;font-size:16px}
+@media(max-width:600px){.search-kind{width:100%}.search-kind select{flex:1}.online-form .search{flex-basis:100%;min-width:0;min-height:44px}#online-search{min-height:44px;font-size:16px;width:100%}#distance-choices{grid-template-columns:minmax(0,1fr)}}

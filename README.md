@@ -115,3 +115,11 @@ Entrambe le lingue offrono mm, cm, m, km, in, ft, yd e mi (e le rispettive unit�
 I fattori internazionali seguono [NIST](https://www.nist.gov/pml/us-surveyfoot/revised-unit-conversion-factors): pollice 0,0254 m, piede 0,3048 m, iarda 0,9144 m, miglio 1609,344 m. Per le superfici si eleva il fattore al quadrato. Frontend e contatore importano lo stesso modulo `src/units.js`; nessuna modifica allo schema o azzeramento dei totali. Pubblicare il Worker prima del frontend quando si aggiungono unità accettate.
 
 Sfondo pagina `#fcf2e4`, campionato dalle zone crema dell’illustrazione; header, campi e riquadri bianchi. L’immagine è visualizzata senza fusione multiply. Il sottotitolo conserva l’a capo esplicito. La build assegna una versione comune ai moduli JavaScript e agli stili per evitare combinazioni di file vecchi e nuovi dalla cache.
+
+## Distanze tra città
+
+Nella ricerca dell’atlante, il selettore Superficie / Distanza (Area / Distance) aggiunge un secondo campo quando si sceglie la distanza. La ricerca esplicita interroga Wikidata per entrambi i nomi; l’utente seleziona i due luoghi dalle descrizioni prima di ottenere il risultato. Non viene scelta automaticamente una città omonima.
+
+La distanza è **approssimata e in linea d’aria, non su strada**: formula haversine, cerchio massimo su una sfera di raggio medio 6.371,0088 km, tra le coordinate P625 dei luoghi. Si accettano solo coordinate terrestri valide e non deprecate, senza qualificatori; i valori preferiti hanno precedenza e coordinate discordanti non vengono scelte arbitrariamente. Nessuna stima se i dati mancano. I link alle due fonti sono mostrati accanto alle selezioni e nel convertitore.
+
+Il risultato mostra km in italiano e mi in inglese, oltre ai Texas di lunghezza. “Usa nel convertitore” carica la distanza e usa il normale meccanismo di conferma del contatore globale; la sola ricerca non incrementa i totali. Cambiare modalità o testo annulla le richieste pendenti e nasconde i risultati obsoleti. Non sono necessari nuovi servizi, account o chiavi API.

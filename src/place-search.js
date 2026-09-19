@@ -29,8 +29,10 @@ export function mountPlaceSearch(onSelect) {
     results.replaceChildren();
   }
   input.addEventListener('input', invalidate);
+  document.querySelector('#search-mode').addEventListener('change', invalidate);
   form.addEventListener('submit', async event => {
     event.preventDefault();
+    if (document.querySelector('#search-mode').value !== 'area') return;
     invalidate();
     const requestVersion = version;
     const query = input.value.trim();
