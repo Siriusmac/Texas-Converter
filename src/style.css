@@ -76,3 +76,31 @@ body{background:#fcf2e4}header,.converter,.input-side,.result,.atlas,details,.fi
 #distance-result strong{font-size:26px;overflow-wrap:anywhere}
 #distance-result button{background:#fff;color:#92341f;border:0;border-radius:5px;padding:12px 16px;font-size:16px}
 @media(max-width:600px){.search-kind{width:100%}.search-kind select{flex:1}.online-form .search{flex-basis:100%;min-width:0;min-height:44px}#online-search{min-height:44px;font-size:16px;width:100%}#distance-choices{grid-template-columns:minmax(0,1fr)}}
+/* Three calculator modes, with online searches beside manual entry. */
+.calculator-shell{background:#fff;border:1px solid #dfd1be;border-radius:9px;overflow:hidden}
+.calculator-shell [hidden]{display:none!important}
+.calculator-shell>.tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:0;padding:0 20px;border-bottom:1px solid #dfd1be}
+.calculator-shell>.tabs button{font-size:clamp(14px,1.7vw,21px);padding:20px 8px;line-height:1.3;border:0;border-bottom:3px solid transparent;background:#fff;color:#30271f}
+.calculator-shell>.tabs button[aria-selected=true]{border-bottom-color:#ad3f26;color:#ad3f26;background:#fcf2e4}
+.calculator-shell .converter{display:grid;grid-template-columns:minmax(0,1.1fr) 48px minmax(0,1fr);grid-template-rows:auto;gap:0 20px;padding:0;border:0;border-radius:0}
+.calculator-shell .input-side{display:block;padding:24px}
+.calculator-shell .fields{display:grid;grid-template-columns:minmax(0,1fr) 115px}
+.calculator-shell .input-side #input-help{margin-top:12px}
+.calculator-shell .bridge{grid-column:2;grid-row:1;align-self:center;margin:0}
+.calculator-shell .result{grid-column:3;grid-row:1;margin:0;padding:24px;border-radius:0}
+.calculator-shell .reference{margin:16px;padding:0 12px}
+.calculator-shell .selected-place{margin:12px 24px 20px}
+#search-panel{padding:24px}
+#search-panel .online-form{margin:0}
+#search-panel .online-help{font-size:14px}
+#search-panel .search-kind{display:none}
+#search-panel #online-panel{margin:16px 0 0;padding:16px 0}
+.atlas-subtitle{font-size:22px;line-height:1.5;margin:22px 0}
+.hero .movie-quote{margin:0;padding:0;border:0;background:transparent;min-width:0}
+.hero .movie-quote p{font-size:17px;line-height:1.5;margin:0 0 8px}
+.hero .movie-quote figcaption{font-size:14px}
+@media(max-width:760px){.calculator-shell>.tabs{padding:0}.calculator-shell>.tabs button{padding:16px 6px}.calculator-shell .converter{display:flex;flex-direction:column;gap:0}.calculator-shell .input-side,#search-panel{padding:20px}.calculator-shell .bridge{display:none}.calculator-shell .result{padding:24px}.hero .movie-quote p{font-size:15px}.atlas-subtitle{font-size:20px}}
+.calculator-shell>.tabs button{width:100%;min-width:0}
+.atlas-subtitle .mobile-break{display:initial}
+#convertitore{margin-bottom:36px}
+@media(min-width:761px){.calculator-shell .bridge{align-self:start;margin:55.5px 0 0}}

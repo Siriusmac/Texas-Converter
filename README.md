@@ -123,3 +123,9 @@ Nella ricerca dell’atlante, il selettore Superficie / Distanza (Area / Distanc
 La distanza è **approssimata e in linea d’aria, non su strada**: formula haversine, cerchio massimo su una sfera di raggio medio 6.371,0088 km, tra le coordinate P625 dei luoghi. Si accettano solo coordinate terrestri valide e non deprecate, senza qualificatori; i valori preferiti hanno precedenza e coordinate discordanti non vengono scelte arbitrariamente. Nessuna stima se i dati mancano. I link alle due fonti sono mostrati accanto alle selezioni e nel convertitore.
 
 Il risultato mostra km in italiano e mi in inglese, oltre ai Texas di lunghezza. “Usa nel convertitore” carica la distanza e usa il normale meccanismo di conferma del contatore globale; la sola ricerca non incrementa i totali. Cambiare modalità o testo annulla le richieste pendenti e nasconde i risultati obsoleti. Non sono necessari nuovi servizi, account o chiavi API.
+
+## Calcolatore principale a tre schede
+
+Le schede Inserimento manuale / Cerca area / Calcola distanza (Manual entry / Find area / Calculate distance) riuniscono tutte le funzioni nel calcolatore principale. Il menu manuale contiene insieme unità lineari e quadrate, raggruppate per Lunghezza / Superficie: ogni opzione conserva separatamente unità e dimensione, usate anche dal contatore. Le ricerche online mantengono la selezione esplicita del luogo e l’indicazione della distanza in linea d’aria. Il caricamento di un risultato o di un confronto apre la scheda manuale con unità e dimensione corrette.
+
+L’atlante conserva un filtro locale indipendente. La citazione di Armageddon è nel blocco iniziale; il sottotitolo con l’a capo è sopra i confronti. Entrambe le lingue seguono la stessa struttura. Le tre schede supportano frecce destra/sinistra, Home ed End da tastiera.
